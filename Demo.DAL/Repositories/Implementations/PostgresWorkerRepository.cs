@@ -117,11 +117,12 @@ public class PostgresWorkerRepository (DemoDbContext demoDbContext) : IWorkerRep
                 new NpgsqlParameter("@telegramId", telegramId)
             };
 
-            var updatedWorker = await _dbContext.Workers
+            var updatedWorker = (await _dbContext.Workers
                 .FromSqlRaw(query, parameters)
                 .AsNoTracking()
-                .FirstOrDefaultAsync();
-
+                .ToListAsync())
+                .FirstOrDefault();
+        
             if (updatedWorker == null)
             {
                 return Result<WorkerDto>.Failure("Worker not found", 404);
