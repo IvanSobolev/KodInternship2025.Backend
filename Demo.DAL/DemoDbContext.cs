@@ -20,9 +20,9 @@ public class DemoDbContext(DbContextOptions<DemoDbContext> options) : DbContext(
                 .HasConversion<string>()
                 .HasMaxLength(50);
 
-            entity.HasMany(w => w.AssignedTasks)
+            entity.HasOne(w => w.AssignedTask)
                 .WithOne(t => t.AssignedWorker)
-                .HasForeignKey(t => t.AssignedWorkerId)
+                .HasForeignKey<Worker>(w => w.TaskId)
                 .OnDelete(DeleteBehavior.SetNull);
         });
 

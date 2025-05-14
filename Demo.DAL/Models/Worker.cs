@@ -5,7 +5,7 @@ namespace Demo.DAL.Models;
 
 public class Worker
 {
-    [Key] // Первичный ключ
+    [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
@@ -21,6 +21,7 @@ public class Worker
     [Required]
     [MaxLength(100)]
     public Department Department { get; set; } 
-
-    public virtual ICollection<ProjectTask> AssignedTasks { get; set; } = new List<ProjectTask>();
+    
+    public Guid? TaskId { get; set; }
+    public ProjectTask? AssignedTask { get; set; }
 }
