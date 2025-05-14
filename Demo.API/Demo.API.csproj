@@ -29,9 +29,4 @@
       </Content>
     </ItemGroup>
 
-
-    <ItemGroup>
-      <Folder Include="Managers\Implementations\" />
-    </ItemGroup>
-
 </Project>
