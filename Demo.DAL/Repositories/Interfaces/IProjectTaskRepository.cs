@@ -1,4 +1,5 @@
 ﻿using Demo.DAL.Abstractions;
+using Demo.DAL.Dto;
 using Demo.DAL.Models;
 using TaskStatus = Demo.DAL.Models.TaskStatus;
 
@@ -9,17 +10,17 @@ public interface IProjectTaskRepository
     Task<Result<ProjectTask?>> GetByIdAsync(Guid id);
     
     // TODO M Фильтрация списка задач по статусам и департаментам.
-    Task<Result<IEnumerable<ProjectTask>>> GetAllAsync(Department? department = null, TaskStatus? status = null);
+    Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(Department? department = null, TaskStatus? status = null);
     // TODO W Проверка доступных заданий по id пользователя
-    Task<Result<IEnumerable<ProjectTask>>> GetAllForUserGetAsync(long id);
+    Task<Result<IEnumerable<ProjectTaskDto>>> GetAllForUserGetAsync(long id);
     
-    Task<Result<ProjectTask>> GetTaskByWorkerIdAsync(long id);
+    Task<Result<ProjectTaskDto>> GetTaskByWorkerIdAsync(long id);
 
     // TODO M Добавление задачи (Отправка уведомления всем в департаменте при добавлении)
-    Task<Result<ProjectTask>> AddAsync(string title, string text, Department department);
+    Task<Result<ProjectTaskDto>> AddAsync(string title, string text, Department department);
     
     //TODO M Обновление задачи (ЕСЛИ она в статусе нужно сделать)
-    Task<Result<ProjectTask>> UpdateAsync(Guid id, 
+    Task<Result<ProjectTaskDto>> UpdateAsync(Guid id, 
         string? title = null, 
         string? text = null, 
         Department? department = null);
@@ -28,8 +29,10 @@ public interface IProjectTaskRepository
     Task<Result> DeleteAsync(Guid id);
     
     
+    
+    
     // TODO W Принять задачу (проблема с асинхронностью. Сложный запрос с постгрой для исправления)
-    Task<Result<ProjectTask>> AcceptTaskAsync(long tgId, Guid id);
+    Task<Result<ProjectTaskDto>> AcceptTaskAsync(long tgId, Guid id);
     
     // TODO W Отправка таска на проверку.
     Task<Result> CompleteTaskAsync(Guid task);

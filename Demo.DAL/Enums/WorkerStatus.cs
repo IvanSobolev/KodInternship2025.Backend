@@ -1,6 +1,6 @@
 ﻿namespace Demo.DAL.Models;
 
-public enum WorkerStatusDto
+public enum WorkerStatus
 {
     Resting,
     Working,

@@ -1,4 +1,5 @@
 ﻿using Demo.DAL.Abstractions;
+using Demo.DAL.Dto;
 using Demo.DAL.Models;
 using TaskStatus = Demo.DAL.Models.TaskStatus;
 
@@ -6,14 +7,14 @@ namespace Demo.DAL.Repositories.Interfaces;
 
 public interface IWorkerRepository
 {
-   Task<Result<Worker?>> GetByIdAsync(long id);
+   Task<Result<WorkerDto?>> GetByIdAsync(long id);
    
    // TODO M Просмотр списка работников и фильтрация по статусам и департаменту
-   Task<Result<IEnumerable<Worker>>> GetAllAsync(WorkerStatusDto? workerStatusDto = null, Department? department = null);
+   Task<Result<IEnumerable<WorkerDto>>> GetAllAsync(WorkerStatus? workerStatusDto = null, Department? department = null);
 
-   Task<Result<Worker>> AddAsync(string fullName, long telegramId, Department department = Department.None, string? telegramUsername = null);
+   Task<Result<WorkerDto>> AddAsync(string fullName, long telegramId, Department department = Department.None, string? telegramUsername = null);
    
-   Task<Result<Worker>> UpdateAsync(long telegramId,
+   Task<Result<WorkerDto>> UpdateAsync(long telegramId,
       string? fullName = null,
       Department? department = null, 
       string? telegramUsername = null);
