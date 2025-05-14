@@ -161,7 +161,7 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
     {
         try
         {
-            var task = await _dbContext.Tasks.FindAsync(id);
+            var task = await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task == null)
             {
                 return Result<ProjectTaskDto>.Failure("Task not found.", 404);

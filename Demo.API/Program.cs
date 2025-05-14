@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DemoDbContext>(options =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
-        "Host=localhost;Port=5433;Database=db_task;Username=username_db;Password=password"));
+        "Host=150.241.88.0;Port=5433;Database=db_task;Username=username_db;Password=password"));
 
 builder.Services.AddScoped<IProjectTaskRepository, PostgresProjectTaskRepository>();
 builder.Services.AddScoped<IWorkerRepository, PostgresWorkerRepository>();
