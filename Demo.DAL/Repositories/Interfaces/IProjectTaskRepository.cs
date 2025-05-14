@@ -7,7 +7,7 @@ namespace Demo.DAL.Repositories.Interfaces;
 
 public interface IProjectTaskRepository
 {
-    Task<Result<ProjectTask?>> GetByIdAsync(Guid id);
+    Task<Result<ProjectTaskDto?>> GetByIdAsync(Guid id);
     
     // TODO M Фильтрация списка задач по статусам и департаментам.
     Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(Department? department = null, TaskStatus? status = null);

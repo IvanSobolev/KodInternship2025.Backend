@@ -16,6 +16,7 @@ public class Worker
 
     [MaxLength(100)]
     public string? TelegramUsername { get; set; }
+    public WorkerStatus WorkerStatus { get; set; }
     
     public ProjectTask? AssignedTask { get; set; }
 }

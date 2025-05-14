@@ -20,6 +20,9 @@ public class DemoDbContext(DbContextOptions<DemoDbContext> options) : DbContext(
                 .HasConversion<string>()
                 .HasMaxLength(50);
 
+            entity.Property(w => w.WorkerStatus)
+                .HasConversion<string>();
+
             entity.HasOne(w => w.AssignedTask)
                 .WithOne(t => t.AssignedWorker)
                 .HasForeignKey<ProjectTask>(w => w.AssignedWorkerId)

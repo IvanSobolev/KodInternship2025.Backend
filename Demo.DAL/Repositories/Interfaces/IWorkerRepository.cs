@@ -12,7 +12,7 @@ public interface IWorkerRepository
    // TODO M Просмотр списка работников и фильтрация по статусам и департаменту
    Task<Result<IEnumerable<WorkerDto>>> GetAllAsync(WorkerStatus? workerStatusDto = null, Department? department = null);
 
-   Task<Result<WorkerDto>> AddAsync(string fullName, long telegramId, Department department = Department.None, string? telegramUsername = null);
+   Task<Result<WorkerDto>> AddAsync(long telegramId, string fullName, Department department = Department.None, string? telegramUsername = null);
    
    Task<Result<WorkerDto>> UpdateAsync(long telegramId,
       string? fullName = null,

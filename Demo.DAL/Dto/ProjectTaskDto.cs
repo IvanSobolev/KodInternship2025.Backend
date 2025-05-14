@@ -1,5 +1,5 @@
 ﻿using Demo.DAL.Models;
-using TaskStatus = System.Threading.Tasks.TaskStatus;
+using TaskStatus = Demo.DAL.Models.TaskStatus;
 
 namespace Demo.DAL.Dto;
 
@@ -15,7 +15,7 @@ public class ProjectTaskDto
 
     public Department Department { get; set; } 
     
-    public Guid? AssignedWorkerId { get; set; }
+    public long? AssignedWorkerId { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
