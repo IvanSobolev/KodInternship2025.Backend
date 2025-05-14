@@ -1,27 +1,22 @@
 ﻿using Demo.DAL.Abstractions;
 using Demo.DAL.Models;
-using TaskStatus = System.Threading.Tasks.TaskStatus;
+using TaskStatus = Demo.DAL.Models.TaskStatus;
 
 namespace Demo.DAL.Repositories.Interfaces;
 
 public interface IWorkerRepository
 {
-   Task<Result<Worker?>> GetByIdAsync(Guid id);
-   Task<Result<Worker?>> GetByTelegramUserIdAsync(long telegramUserId);
-   Task<Result<IEnumerable<Worker>>> GetAllAsync();
-   Task<Result<IEnumerable<Worker>>> GetWorkersByDepartmentAsync(Department department);
-
-   Task<Result<Worker>> AddAsync(string fullName, long telegramId, Department department, string? telegramUsername = null);
-   Task<Result<Worker>> UpdateAsync(Guid id, 
-      string fullName, 
-      long telegramId, 
-      string telegramUsername,
-      Department department);
+   Task<Result<Worker?>> GetByIdAsync(long id);
    
-   Task<Result<Worker>> PatchAsync(Guid id, 
-      string? fullName = null, 
-      long? telegramId = null, 
+   // TODO M Просмотр списка работников и фильтрация по статусам и департаменту
+   Task<Result<IEnumerable<Worker>>> GetAllAsync(WorkerStatusDto? workerStatusDto = null, Department? department = null);
+
+   Task<Result<Worker>> AddAsync(string fullName, long telegramId, Department department = Department.None, string? telegramUsername = null);
+   
+   Task<Result<Worker>> UpdateAsync(long telegramId,
+      string? fullName = null,
       Department? department = null, 
       string? telegramUsername = null);
-   Task<Result> DeleteAsync(Guid id);
+   
+   Task<Result> DeleteAsync(long id);
 }

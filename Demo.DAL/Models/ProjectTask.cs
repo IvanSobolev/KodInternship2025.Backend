@@ -22,6 +22,7 @@ public class ProjectTask
     public Department Department { get; set; } 
     
     public Guid? AssignedWorkerId { get; set; }
+    
     [ForeignKey("AssignedWorkerId")]
     public Worker? AssignedWorker { get; set; }
 

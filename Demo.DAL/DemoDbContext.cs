@@ -14,7 +14,7 @@ public class DemoDbContext(DbContextOptions<DemoDbContext> options) : DbContext(
 
         modelBuilder.Entity<Worker>(entity =>
         {
-            entity.HasIndex(w => w.TelegramUserId).IsUnique();
+            entity.HasKey(w => w.TelegramId);
 
             entity.Property(w => w.Department)
                 .HasConversion<string>()

@@ -6,21 +6,16 @@ namespace Demo.DAL.Models;
 public class Worker
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public long TelegramId { get; set; }
 
-    [Required]
     [MaxLength(200)]
     public string FullName { get; set; }
-
-    [Required]
-    public long TelegramUserId { get; set; }
+    
+    [MaxLength(100)]
+    public Department Department { get; set; } 
 
     [MaxLength(100)]
     public string? TelegramUsername { get; set; }
-
-    [Required]
-    [MaxLength(100)]
-    public Department Department { get; set; } 
     
     public ProjectTask? AssignedTask { get; set; }
 }

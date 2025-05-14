@@ -1,29 +1,42 @@
 ﻿using Demo.DAL.Abstractions;
 using Demo.DAL.Models;
-using TaskStatus = System.Threading.Tasks.TaskStatus;
+using TaskStatus = Demo.DAL.Models.TaskStatus;
 
 namespace Demo.DAL.Repositories.Interfaces;
 
 public interface IProjectTaskRepository
 {
     Task<Result<ProjectTask?>> GetByIdAsync(Guid id);
-    Task<Result<IEnumerable<ProjectTask>>> GetAllAsync(Department? department = null, TaskStatus? status = null);
-    Task<Result<ProjectTask>> GetTaskByWorkerIdAsync(Guid workerId);
-    Task<Result<ProjectTask>> GetTaskByWorkerTelegramUserIdAsync(long telegramUserId);
-
-    Task<Result<ProjectTask>> AddAsync(string title, string text, TaskStatus status, Department department);
-    Task<Result<ProjectTask>> UpdateAsync(Guid id, 
-        string title, 
-        string text, 
-        TaskStatus status, 
-        Department department,
-        Guid? assignedWorkerId);
     
-    Task<Result<ProjectTask>> PatchAsync(Guid id, 
+    // TODO M Фильтрация списка задач по статусам и департаментам.
+    Task<Result<IEnumerable<ProjectTask>>> GetAllAsync(Department? department = null, TaskStatus? status = null);
+    // TODO W Проверка доступных заданий по id пользователя
+    Task<Result<IEnumerable<ProjectTask>>> GetAllForUserGetAsync(long id);
+    
+    Task<Result<ProjectTask>> GetTaskByWorkerIdAsync(long id);
+
+    // TODO M Добавление задачи (Отправка уведомления всем в департаменте при добавлении)
+    Task<Result<ProjectTask>> AddAsync(string title, string text, Department department);
+    
+    //TODO M Обновление задачи (ЕСЛИ она в статусе нужно сделать)
+    Task<Result<ProjectTask>> UpdateAsync(Guid id, 
         string? title = null, 
         string? text = null, 
-        TaskStatus? status = null, 
-        Department? department = null,
-        Guid? assignedWorkerId = null);
+        Department? department = null);
+    
+    // TODO M Удаление задачи в любом статусе (По итогу должно быть уведомление пользователю, у которого эта задача)
     Task<Result> DeleteAsync(Guid id);
+    
+    
+    // TODO W Принять задачу (проблема с асинхронностью. Сложный запрос с постгрой для исправления)
+    Task<Result<ProjectTask>> AcceptTaskAsync(long tgId, Guid id);
+    
+    // TODO W Отправка таска на проверку.
+    Task<Result> CompleteTaskAsync(Guid task);
+    
+    // TODO M Подтверждение выполнения таска (после проверки задания)
+    Task<Result> FinishAsync(Guid id);
+    
+    // TODO M Не правильное выполнение задачи (после проверки задания)
+    Task<Result> CancelAsync(Guid id);
 }
