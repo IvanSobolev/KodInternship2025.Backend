@@ -19,12 +19,6 @@
 
 
 
-    <ItemGroup>
-      <Folder Include="Migrations\" />
-    </ItemGroup>
-
-
-
 
 
 
