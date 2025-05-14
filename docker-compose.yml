@@ -1,0 +1,33 @@
+﻿services:
+  demo_api:
+    build:
+      context: .
+      dockerfile: Demo.API/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_CONNECTION_STRING=Host=${DB_TASK_HOST};Port=5432;Database=${DB_TASK_DB};Username=${DB_TASK_USER};Password=${DB_TASK_PASSWORD}
+    depends_on:
+      task_db:
+        condition: service_healthy
+  
+  task_db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=${DB_TASK_USER}
+      - POSTGRES_PASSWORD=${DB_TASK_PASSWORD}
+      - POSTGRES_DB=${DB_TASK_DB}
+    volumes:
+      - task_db_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_TASK_PORT}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $DB_TASK_USER -d $DB_TASK_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      
+volumes:
+  task_db_data:
