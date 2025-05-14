@@ -22,7 +22,7 @@ public class DemoDbContext(DbContextOptions<DemoDbContext> options) : DbContext(
 
             entity.HasOne(w => w.AssignedTask)
                 .WithOne(t => t.AssignedWorker)
-                .HasForeignKey<Worker>(w => w.TaskId)
+                .HasForeignKey<ProjectTask>(w => w.AssignedWorkerId)
                 .OnDelete(DeleteBehavior.SetNull);
         });
 

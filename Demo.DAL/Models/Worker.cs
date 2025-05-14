@@ -22,6 +22,5 @@ public class Worker
     [MaxLength(100)]
     public Department Department { get; set; } 
     
-    public Guid? TaskId { get; set; }
     public ProjectTask? AssignedTask { get; set; }
 }

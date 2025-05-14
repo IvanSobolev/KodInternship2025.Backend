@@ -20,9 +20,10 @@ public class ProjectTask
 
     [Required]
     public Department Department { get; set; } 
-
+    
+    public Guid? AssignedWorkerId { get; set; }
     [ForeignKey("AssignedWorkerId")]
-    public virtual Worker? AssignedWorker { get; set; }
+    public Worker? AssignedWorker { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
