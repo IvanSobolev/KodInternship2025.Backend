@@ -1,5 +1,6 @@
-﻿using Demo.DAL.Models;
-using TaskStatus = Demo.DAL.Models.TaskStatus;
+﻿using Demo.DAL.Enums;
+using Demo.DAL.Models;
+using TaskStatus = Demo.DAL.Enums.TaskStatus;
 
 namespace Demo.DAL.Dto;
 

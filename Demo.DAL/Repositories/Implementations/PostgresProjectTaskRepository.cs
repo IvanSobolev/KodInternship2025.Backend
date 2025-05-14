@@ -1,9 +1,10 @@
 ﻿using Demo.DAL.Abstractions;
 using Demo.DAL.Dto;
+using Demo.DAL.Enums;
 using Demo.DAL.Models;
 using Demo.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using TaskStatus = Demo.DAL.Models.TaskStatus;
+using TaskStatus = Demo.DAL.Enums.TaskStatus;
 
 namespace Demo.DAL.Repositories.Implementations;
 

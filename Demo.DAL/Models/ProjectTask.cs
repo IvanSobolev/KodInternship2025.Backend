@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Demo.DAL.Enums;
+using TaskStatus = Demo.DAL.Enums.TaskStatus;
 
 namespace Demo.DAL.Models;
 

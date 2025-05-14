@@ -1,4 +1,5 @@
-﻿using Demo.DAL.Models;
+﻿using Demo.DAL.Enums;
+using Demo.DAL.Models;
 
 namespace Demo.DAL.Dto;
 

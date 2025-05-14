@@ -1,4 +1,4 @@
-﻿namespace Demo.DAL.Models;
+﻿namespace Demo.DAL.Enums;
 
 public enum TaskStatus
 {

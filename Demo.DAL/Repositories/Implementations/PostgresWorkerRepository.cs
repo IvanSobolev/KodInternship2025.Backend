@@ -1,5 +1,6 @@
 ﻿using Demo.DAL.Abstractions;
 using Demo.DAL.Dto;
+using Demo.DAL.Enums;
 using Demo.DAL.Models;
 using Demo.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
