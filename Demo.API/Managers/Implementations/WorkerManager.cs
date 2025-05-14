@@ -14,9 +14,9 @@ public class WorkerManager (IWorkerRepository workerRepository) : IWorkerManager
         return await _workerRepository.GetByIdAsync(id);
     }
 
-    public async Task<Result<IEnumerable<WorkerDto>>> GetAllAsync(WorkersFilterDto filters)
+    public async Task<Result<IEnumerable<WorkerDto>>> GetAllAsync(WorkersFilterDto? filters)
     {
-        return await _workerRepository.GetAllAsync(filters.WorkerStatusDto, filters.Department);
+        return await _workerRepository.GetAllAsync(filters?.WorkerStatusDto, filters?.Department);
     }
 
     public async Task<Result<WorkerDto>> AddAsync(AddWorkerDto newWorker)

@@ -1,11 +1,10 @@
 ﻿using Demo.DAL.Enums;
-using Demo.DAL.Models;
 
 namespace Demo.DAL.Dto;
 
-public class WorkersFilterDto (WorkerStatus? workerStatus = null, Department? department = null)
+public class WorkersFilterDto
 {
-    public WorkerStatus? WorkerStatusDto { get; set; } = workerStatus;
-    public Department? Department { get; set; } = department;
+    public WorkerStatus? WorkerStatusDto { get; set; }
+    public Department? Department { get; set; }
 
 }

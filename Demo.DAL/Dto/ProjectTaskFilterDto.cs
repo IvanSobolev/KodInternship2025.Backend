@@ -3,8 +3,8 @@ using TaskStatus = Demo.DAL.Enums.TaskStatus;
 
 namespace Demo.DAL.Dto;
 
-public class ProjectTaskFilterDto(Department? department = null, TaskStatus? status = null)
+public class ProjectTaskFilterDto
 {
-    public Department? Department { get; set; } = department;
-    public TaskStatus? Status { get; set; } = status;
+    public Department? Department { get; set; }
+    public TaskStatus? WorkerStatusDto { get; set; }
 }

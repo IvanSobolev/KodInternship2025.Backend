@@ -15,9 +15,9 @@ public class ProjectTaskManager(IProjectTaskRepository repository) : IProjectTas
         return await _repository.GetByIdAsync(id);
     }
 
-    public async Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(ProjectTaskFilterDto filter)
+    public async Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(ProjectTaskFilterDto? filter)
     {
-        return await _repository.GetAllAsync(filter.Department, filter.Status);
+        return await _repository.GetAllAsync(filter?.Department, filter?.WorkerStatusDto);
     }
 
     public async Task<Result<IEnumerable<ProjectTaskDto>>> GetAllForUserGetAsync(long id)

@@ -254,20 +254,25 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
 
             var now = DateTime.UtcNow;
             ProjectTask? acceptedTask = null;
-
+            
+            string statusInProgressString = TaskStatus.InProgress.ToString();
+            string statusToDoString = TaskStatus.ToDo.ToString();
+            
             FormattableString query = $@"
-                UPDATE ""ProjectTasks""
-                SET ""Status"" = {(int)TaskStatus.InProgress},
+                UPDATE ""Tasks""
+                SET ""Status"" = {statusInProgressString},
                     ""AssignedWorkerId"" = {tgId},
                     ""UpdatedAt"" = {now}
                 WHERE ""Id"" = {id}
-                  AND ""Status"" = {(int)TaskStatus.ToDo}
+                  AND ""Status"" = {statusToDoString}
                   AND ""AssignedWorkerId"" IS NULL
                 RETURNING ""Id"", ""Title"", ""Text"", ""Status"", ""Department"", ""AssignedWorkerId"", ""CreatedAt"", ""UpdatedAt"";";
             
-            acceptedTask = await _dbContext.Tasks
-                                        .FromSqlInterpolated<ProjectTask>(query)
-                                        .FirstOrDefaultAsync();
+            List<ProjectTask> returnedTasks = await _dbContext.Tasks
+                .FromSqlInterpolated<ProjectTask>(query)
+                .ToListAsync();
+
+            acceptedTask = returnedTasks.FirstOrDefault();
 
 
             if (acceptedTask == null)

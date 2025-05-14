@@ -9,7 +9,7 @@ namespace Demo.Managers.Interfaces;
 public interface IProjectTaskManager
 {
     Task<Result<ProjectTaskDto?>> GetByIdAsync(Guid id);
-    Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(ProjectTaskFilterDto filter);
+    Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(ProjectTaskFilterDto? filter);
     Task<Result<IEnumerable<ProjectTaskDto>>> GetAllForUserGetAsync(long id);
     Task<Result<ProjectTaskDto>> GetTaskByWorkerIdAsync(long id);
     Task<Result<ProjectTaskDto>> AddAsync(AddProjectTaskDto newTask);
