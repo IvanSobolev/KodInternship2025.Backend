@@ -12,7 +12,7 @@ public class Employee
     [Required] 
     [MaxLength(50)]  
     [Column("FullName")] 
-    public string FullName { get; set; }
+    public string FullNames{ get; set; }
 
 
     [Required]
