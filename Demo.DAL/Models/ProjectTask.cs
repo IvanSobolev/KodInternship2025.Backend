@@ -1,26 +1,31 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Demo.DAL.Models;
 
-[Table("ProjectTask")] 
 public class ProjectTask
 {
-    [Key] 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
-    public int Id {get; set;}
-
-    [Required] 
-    [Column("Name")] 
-    public string Name { get; set; }
-    [Required]
-    [Column("TaskText")]
-    public string TaskText {get; set;}
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
-    [Column("Status")]
-    public ProjecTaskStatus Status {get; set;}
+    [MaxLength(250)]
+    public string Title { get; set; }
 
     [Required]
-    [Column("Departament")] 
+    public string Text { get; set; }
+
+    [Required]
+    public TaskStatus Status { get; set; }
+
+    [Required]
     public Department Department { get; set; } 
+    
+    public Guid? AssignedWorkerId { get; set; }
+    
+    [ForeignKey("AssignedWorkerId")]
+    public Worker? AssignedWorker { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
