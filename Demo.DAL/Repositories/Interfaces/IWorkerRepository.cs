@@ -9,6 +9,8 @@ namespace Demo.DAL.Repositories.Interfaces;
 public interface IWorkerRepository
 {
    Task<Result<WorkerDto?>> GetByIdAsync(long id);
+
+   Task<Result<ICollection<long>>> GetTelegramIdInDepartment(Department department);
    
    // TODO M Просмотр списка работников и фильтрация по статусам и департаменту
    Task<Result<IEnumerable<WorkerDto>>> GetAllAsync(WorkerStatus? workerStatusDto = null, Department? department = null);
