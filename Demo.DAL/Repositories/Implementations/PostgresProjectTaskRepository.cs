@@ -405,13 +405,11 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
             }
 
             task.Status = TaskStatus.InProgress; 
-            task.UpdatedAt = DateTime.UtcNow;
                 
             if (task.AssignedWorker != null)
             {
                 task.AssignedWorker.WorkerStatus = WorkerStatus.Working;
             }
-            task.AssignedWorkerId = null;
 
             await _dbContext.SaveChangesAsync();
             return Result.Success();
