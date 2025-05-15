@@ -10,6 +10,7 @@ public interface IProjectTaskRepository
 {
     Task<Result<ProjectTaskDto?>> GetByIdAsync(Guid id);
     
+    
     // TODO M Фильтрация списка задач по статусам и департаментам.
     Task<Result<IEnumerable<ProjectTaskDto>>> GetAllAsync(Department? department = null, TaskStatus? status = null);
     // TODO W Проверка доступных заданий по id пользователя

@@ -59,13 +59,13 @@ public class ProjectTaskController (IProjectTaskManager manager) : ControllerBas
     }
 
     /// <summary>
-    /// Получает все задачи, назначенные определенному пользователю (работнику).
+    /// Получает все задачи, которые может выполнять работник.
     /// </summary>
     /// <param name="workerId">Telegram ID работника.</param>
     /// <returns>Список задач, назначенных пользователю.</returns>
     /// <response code="200">Список задач успешно возвращен.</response>
     /// <response code="500">Внутренняя ошибка сервера.</response>
-    [HttpGet("assigned-to-user/{workerId:long}")] // Уточнили тип параметра
+    [HttpGet("avaible-to-user/{workerId:long}")] // Уточнили тип параметра
     [ProducesResponseType(typeof(IEnumerable<ProjectTaskDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllForUserGetAsync(long workerId)

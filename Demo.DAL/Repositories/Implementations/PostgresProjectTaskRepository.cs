@@ -96,8 +96,16 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
     {
         try
         {
+            var worker = await _dbContext.Workers
+                .FirstOrDefaultAsync(w => w.TelegramId == id);
+
+            if (worker == null)
+            {
+                return Result<IEnumerable<ProjectTaskDto>>.Failure("Worker not found", 404);
+            }
+            
             var tasks = await _dbContext.Tasks
-                .Where(pt => pt.AssignedWorkerId == id)
+                .Where(pt => pt.Department == worker.Department && pt.Status == TaskStatus.ToDo)
                 .Select(t => new ProjectTaskDto
                 {
                     Id = t.Id,
