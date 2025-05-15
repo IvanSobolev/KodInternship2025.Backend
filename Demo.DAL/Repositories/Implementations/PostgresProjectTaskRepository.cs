@@ -124,7 +124,7 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
         try
         {
             var task = await _dbContext.Tasks
-                .FirstOrDefaultAsync(pt => pt.AssignedWorkerId == id && pt.Status != TaskStatus.Completed);
+                .FirstOrDefaultAsync(pt => pt.AssignedWorkerId == id);
 
             if (task == null)
             {
