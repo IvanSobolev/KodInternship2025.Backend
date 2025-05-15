@@ -82,7 +82,7 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ошибка при отправке сообщения о новой задаче {TaskId} в Kafka.", createdTaskDto.Id);
+                Console.WriteLine("Ошибка при отправке сообщения о новой задаче {TaskId} в Kafka.");
             }
         }
         else
