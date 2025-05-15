@@ -36,7 +36,7 @@ public class NewTaskMessage
     public Guid TaskId { get; set; }
     public string Title { get; set; }
     public string Text { get; set; }
-    public int Department { get; set; }
+    public string Department { get; set; }
     public List<long> RecipientTelegramIds { get; set; }
 }
 

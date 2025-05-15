@@ -70,7 +70,7 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
                 TaskId = createdTaskDto.Id,
                 Title = createdTaskDto.Title,
                 Text = createdTaskDto.Text,
-                Department = (int)createdTaskDto.Department,
+                Department = createdTaskDto.Department.ToString(),
                 RecipientTelegramIds = recipientTelegramIds
             };
 
