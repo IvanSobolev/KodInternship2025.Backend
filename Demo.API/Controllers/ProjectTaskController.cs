@@ -145,6 +145,7 @@ public class ProjectTaskController (IProjectTaskManager manager) : ControllerBas
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateTaskDto updateTaskDto)
     {
+        Console.WriteLine(updateTaskDto.Id);
         var result =  await _manager.UpdateAsync(updateTaskDto);
         if (result.IsSuccess)
         {

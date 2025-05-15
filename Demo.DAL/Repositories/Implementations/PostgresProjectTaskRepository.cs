@@ -161,7 +161,7 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
     {
         try
         {
-            var task = await _dbContext.Tasks.FindAsync(id);
+            var task = await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task == null)
             {
                 return Result<ProjectTaskDto>.Failure("Task not found.", 404);
@@ -213,9 +213,8 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
                 return Result.Failure("Task not found.", 404);
             }
 
-            long? assignedWorkerId = task.AssignedWorkerId;
-
             _dbContext.Tasks.Remove(task);
+            if (task.AssignedWorker != null) task.AssignedWorker.WorkerStatus = WorkerStatus.Resting;
             await _dbContext.SaveChangesAsync();
 
             return Result.Success();
