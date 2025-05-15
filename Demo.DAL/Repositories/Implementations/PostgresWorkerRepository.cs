@@ -38,6 +38,17 @@ public class PostgresWorkerRepository (DemoDbContext demoDbContext) : IWorkerRep
         }
     }
 
+    public async Task<Result<ICollection<long>>> GetTelegramIdInDepartment(Department department)
+    {
+        var q = _dbContext.Workers.AsQueryable();
+
+        q = q.Where(w => w.Department == department);
+
+        var workers = await q.Select(w => w.TelegramId).ToListAsync();
+
+        return Result<ICollection<long>>.Success(workers);
+    }
+
     public async Task<Result<IEnumerable<WorkerDto>>> GetAllAsync(WorkerStatus? workerStatusDto = null, Department? department = null)
     {
         var q = _dbContext.Workers.AsQueryable();

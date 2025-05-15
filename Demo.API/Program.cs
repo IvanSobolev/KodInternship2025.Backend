@@ -1,6 +1,7 @@
 using Demo.DAL;
 using Demo.DAL.Repositories.Implementations;
 using Demo.DAL.Repositories.Interfaces;
+using Demo.Kafka;
 using Demo.Managers.Implementations;
 using Demo.Managers.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DemoDbContext>(options =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
         "Host=150.241.88.0;Port=5433;Database=db_task;Username=username_db;Password=password"));
+
+builder.Services.Configure<KafkaProducerConfig>(builder.Configuration.GetSection("Kafka"));
+builder.Services.AddSingleton<IKafkaProducerService, KafkaProducerService>();
 
 builder.Services.AddScoped<IProjectTaskRepository, PostgresProjectTaskRepository>();
 builder.Services.AddScoped<IWorkerRepository, PostgresWorkerRepository>();
