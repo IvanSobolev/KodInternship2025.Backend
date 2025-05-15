@@ -38,6 +38,7 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
                 Title = t.Title,
                 Text = t.Text,
                 Status = t.Status,
+                AssignedWorkerId = t.AssignedWorkerId,
                 Department = t.Department,
                 CreatedAt = t.CreatedAt,
                 UpdatedAt = t.UpdatedAt
@@ -66,6 +67,7 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
                 Title = t.Title,
                 Text = t.Text,
                 Status = t.Status,
+                AssignedWorkerId = t.AssignedWorkerId,
                 Department = t.Department,
                 CreatedAt = t.CreatedAt,
                 UpdatedAt = t.UpdatedAt
@@ -102,6 +104,7 @@ public class PostgresProjectTaskRepository (DemoDbContext dbContext) : IProjectT
                     Title = t.Title,
                     Text = t.Text,
                     Status = t.Status,
+                    AssignedWorkerId = t.AssignedWorkerId,
                     Department = t.Department,
                     CreatedAt = t.CreatedAt,
                     UpdatedAt = t.UpdatedAt
