@@ -87,7 +87,7 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
         }
         else
         {
-           Console.WriteLine("Нет получателей для уведомления о новой задаче {TaskId}. Сообщение в Kafka не отправлялось.", createdTaskDto.Id);
+           Console.WriteLine("Нет получателей для уведомления о новой задаче {TaskId}. Сообщение в Kafka не отправлялось.");
         }
 
         return Result<ProjectTaskDto>.Success(createdTaskDto);
