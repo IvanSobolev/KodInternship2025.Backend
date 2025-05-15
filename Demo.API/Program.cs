@@ -36,14 +36,22 @@ builder.Services.AddScoped<IWorkerManager, WorkerManager>();
 //    });
 //});
 
+var mySignalRCorsPolicy = "MySignalRCorsPolicy";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin() 
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
+    options.AddPolicy(name: mySignalRCorsPolicy,
+        policy =>
+        {
+            // ВАЖНО: Это разрешит любой origin, который делает запрос,
+            // но только если AllowCredentials() используется, браузер все равно
+            // будет требовать точное совпадение origin'а в ответе.
+            // Эта функция будет вызвана для каждого запроса с Origin.
+            policy.SetIsOriginAllowed(origin => true) // Разрешает любой origin
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials(); // <--- ВАЖНО для SignalR
+        });
 });
 
 var app = builder.Build();
@@ -55,6 +63,8 @@ app.UseSwaggerUI();
 
 app.UseRouting();
 app.MapControllers();
+
+app.UseCors(mySignalRCorsPolicy);
 app.MapHub<TaskNotificationHub>("/taskNotificationHub");
 
 using (var scope = app.Services.CreateScope())
