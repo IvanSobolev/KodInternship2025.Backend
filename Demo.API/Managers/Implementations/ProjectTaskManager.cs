@@ -153,12 +153,12 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
             }
             else
             {
-               Console.WriteLine("Задача {TaskId} успешно завершена, но не была назначена работнику. Уведомление не отправлено.", taskDto.Id);
+               Console.WriteLine("Задача {TaskId} успешно завершена, но не была назначена работнику. Уведомление не отправлено.");
             }
         }
         else
         {
-            Console.WriteLine("Ошибка при завершении задачи {TaskId} в репозитории: {Error}", id, finishResult.Error);
+            Console.WriteLine("Ошибка при завершении задачи {TaskId} в репозитории: {Error}");
         }
         return finishResult;
     }
