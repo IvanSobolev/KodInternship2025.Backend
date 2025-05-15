@@ -42,7 +42,7 @@ public class PostgresWorkerRepository (DemoDbContext demoDbContext) : IWorkerRep
     {
         var q = _dbContext.Workers.AsQueryable();
 
-        q = q.Where(w => w.Department == department);
+        q = q.Where(w => w.Department == department).Where(w => w.WorkerStatus == WorkerStatus.Resting);
 
         var workers = await q.Select(w => w.TelegramId).ToListAsync();
 

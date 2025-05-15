@@ -54,13 +54,12 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
             }
             else
             {
-                Console.WriteLine("Не удалось получить список работников для уведомления о задаче {TaskId}: {Error}",
-                    createdTaskDto.Id, workersResult.Error);
+                Console.WriteLine("Не удалось получить список работников для уведомления о задаче {TaskId}: {Error}");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Ошибка при получении списка работников для уведомления о задаче {TaskId}", createdTaskDto.Id);
+            Console.WriteLine("Ошибка при получении списка работников для уведомления о задаче {TaskId}");
         }
 
         
@@ -71,14 +70,14 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
                 TaskId = createdTaskDto.Id,
                 Title = createdTaskDto.Title,
                 Text = createdTaskDto.Text,
-                Department = createdTaskDto.Department.ToString(),
+                Department = (int)createdTaskDto.Department,
                 RecipientTelegramIds = recipientTelegramIds
             };
 
             try
             {
                 await _kafkaProducer.ProduceNewTaskMessageAsync(kafkaMessage);
-                Console.WriteLine("Сообщение о новой задаче {TaskId} успешно отправлено в Kafka.", createdTaskDto.Id);
+                Console.WriteLine("Сообщение о новой задаче {TaskId} успешно отправлено в Kafka.");
             }
             catch (Exception ex)
             {
