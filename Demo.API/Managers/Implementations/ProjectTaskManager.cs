@@ -2,16 +2,19 @@
 using Demo.DAL.Dto;
 using Demo.DAL.Enums;
 using Demo.DAL.Repositories.Interfaces;
+using Demo.Hubs;
 using Demo.Kafka;
 using Demo.Managers.Interfaces;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Demo.Managers.Implementations;
 
-public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProducerService kafkaProducer, IWorkerRepository workerRepository) : IProjectTaskManager
+public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProducerService kafkaProducer, IWorkerRepository workerRepository, IHubContext<TaskNotificationHub> hubContext) : IProjectTaskManager
 {
     private readonly IProjectTaskRepository _repository = repository;
     private readonly IKafkaProducerService _kafkaProducer = kafkaProducer;
     private readonly IWorkerRepository _workerRepository = workerRepository;
+    private readonly IHubContext<TaskNotificationHub> _hubContext = hubContext;
     
     public async Task<Result<ProjectTaskDto?>> GetByIdAsync(Guid id)
     {
@@ -44,6 +47,7 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
         }
 
         var createdTaskDto = addResult.Value;
+        await _hubContext.Clients.All.SendAsync("NewTaskCreated", createdTaskDto);
         List<long> recipientTelegramIds = new List<long>();
         var workersResult = await _workerRepository.GetTelegramIdInDepartment(createdTaskDto.Department);
         try
@@ -107,12 +111,33 @@ public class ProjectTaskManager(IProjectTaskRepository repository, IKafkaProduce
 
     public async Task<Result<ProjectTaskDto>> AcceptTaskAsync(long tgId, Guid id)
     {
-        return await _repository.AcceptTaskAsync(tgId, id);
+        var result = await _repository.AcceptTaskAsync(tgId, id);
+        if (result.IsSuccess && result.Value != null)
+        {
+            var acceptedTask = result.Value;
+            await _hubContext.Clients.All.SendAsync("TaskAccepted", acceptedTask, tgId);
+        }
+        return result;
     }
 
     public async Task<Result> CompleteTaskAsync(Guid task)
     {
-        return await _repository.CompleteTaskAsync(task);
+        var taskBeforeUpdate = await _repository.GetByIdAsync(task);
+        var result = await _repository.CompleteTaskAsync(task);
+
+        if (result.IsSuccess)
+        {
+            if (taskBeforeUpdate.IsSuccess && taskBeforeUpdate.Value != null)
+            {
+                    await _hubContext.Clients.All.SendAsync("TaskStatusChanged", new
+                    {
+                        TaskId = task,
+                        NewStatus = DAL.Enums.TaskStatus.PendingReview.ToString(),
+                        AssignedWorkerId = taskBeforeUpdate.Value.AssignedWorkerId
+                    });
+            }
+        }
+        return result;
     }
 
     public async Task<Result> FinishAsync(Guid id)

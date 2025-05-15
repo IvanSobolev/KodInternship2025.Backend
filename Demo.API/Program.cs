@@ -1,6 +1,7 @@
 using Demo.DAL;
 using Demo.DAL.Repositories.Implementations;
 using Demo.DAL.Repositories.Interfaces;
+using Demo.Hubs;
 using Demo.Kafka;
 using Demo.Managers.Implementations;
 using Demo.Managers.Interfaces;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DemoDbContext>(options =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
@@ -54,6 +55,7 @@ app.UseSwaggerUI();
 
 app.UseRouting();
 app.MapControllers();
+app.MapHub<TaskNotificationHub>("/taskNotificationHub");
 
 using (var scope = app.Services.CreateScope())
 {
